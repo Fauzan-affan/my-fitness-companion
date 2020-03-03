@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/vue.css">
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>My Fitness Companion</title>
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo center">My Fitness Companion</a>
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+            <!-- search -->
+            <form class="right search-bar">
+                <div class="input-field">
+                    <input id="search" type="search" v-model="search" required>
+                    <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                    <i class="material-icons">close</i>
+                </div>
+            </form>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <div class="container" id="hero">
+        <div class="row">
+            <h5>Heros Workout</h5>
+            <div class="col s4" v-for="item in workout">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="img/hero.jpg">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">{{ item.name }}<i class="material-icons right">more_vert</i></span>
+
+                        <button id="show-modal" @click="modalActive()">Details</button>
+                        <!-- use the modal component, pass in the prop -->
+                        <modal v-if="showModal" @close="modalClose()">
+
+                            <h3 slot="header">{{ item.name }}</h3>
+                            <div slot="body">
+                                <table class="striped responsive-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Excercise</th>
+                                            <th>Wram Up</th>
+                                            <th>Working Sets</th>
+                                            <th>Rest Period</th>
+                                        </tr>
+                                    </thead>
+                            
+                                    <tbody>
+                                        <tr>
+                                            <td><b>Incline Barbell Bench Press</b></td>
+                                            <td>2 x 10-15</td>
+                                            <td>3 x 4-8</td>
+                                            <td>5 min</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Barbell Bench Press</b></td>
+                                            <td>2 x 10-15</td>
+                                            <td>3 x 4-8</td>
+                                            <td>4 min</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Bent Over Barbell Row</b></td>
+                                            <td>5 x 10-15</td>
+                                            <td>1 x 4-8</td>
+                                            <td>10 min</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </modal>
+                        
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">{{ item.name }}<i class="material-icons right">close</i></span>
+                        <p>{{ item.detail }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+    
+    <!-- Materialize -->
+    <script src="js/materialize.js"></script>
+    <!-- Vue -->
+    <script src="js/hero.js"></script>
+    <!-- template for the modal component -->
+    <script type="text/x-template" id="modal-template">
+        <transition name="modal">
+            <div class="modal-mask">
+                <div class="modal-wrapper">
+                    <div class="modal-container">
+            
+                        <div class="modal-header">
+                            <slot name="header">
+                                default header
+                            </slot>
+                        </div>
+            
+                        <div class="modal-body">
+                            <slot name="body">
+                                default body
+                            </slot>
+                        </div>
+            
+                        <div class="modal-footer">
+                            <slot name="footer">
+                                You can do it!
+                                <button class="modal-default-button" @click="$emit('close')">
+                                    OK
+                                </button>
+                            </slot>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </transition>
+    </script>
+  </body>
+</html>
